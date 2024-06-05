@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { StripeService } from './services/stripe.service';
 import { PaymentSessionDto } from './dto/payment-session.dto';
 import { Request, Response } from 'express';
@@ -7,7 +8,8 @@ import { Request, Response } from 'express';
 export class PaymentsController {
   constructor(private readonly stripeService: StripeService) {}
 
-  @Post('create-payment-session')
+  // @Post('create-payment-session')
+  @MessagePattern('create.payment.session')
   createPaymentSession(@Body() paymentSessionDto: PaymentSessionDto) {
     return this.stripeService.createPaymentSession(paymentSessionDto);
   }
